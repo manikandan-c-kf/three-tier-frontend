@@ -1,0 +1,19 @@
+.post-form-container {
+    padding: 16px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+button {
+    align-self: flex-end;
+}

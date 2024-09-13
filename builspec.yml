@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo Installing npm dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - npm run build --prod
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing Docker image to ECR...
+      - $(aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $REPOSITORY_URI)
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker push $REPOSITORY_URI:latest
+
+artifacts:
+  files:
+    - dist/**/*
+  
+cache:
+  paths:
+    - node_modules/**/*
+
